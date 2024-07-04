@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<string>
 using namespace std;
 
@@ -229,7 +229,7 @@ ostream& operator<<(ostream& os, const Human& obj)
     return os;
 }
 
-int main() // Изменил void на int
+void main()
 {
     setlocale(LC_ALL, "");
     cout << "Hello Academy" << endl;
