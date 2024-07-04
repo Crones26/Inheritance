@@ -5,7 +5,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-#define delimiter "\t----------------------------------------------\t"
+#define delimiter "\n----------------------------------------------\n"
 
 #define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, int age
 #define HUMAN_GIVE_PARAMETERS last_name, first_name, age
@@ -48,13 +48,13 @@ public:
         set_age(age);
         cout << "HConstructor:\t" << this << endl;
     }
-    ~Human()
+    virtual ~Human()
     {
         cout << "HDestructor:\t" << this << endl;
     }
 
     //              Methods:
-    void print()const
+    virtual void print()const
     {
         cout << last_name << " " << first_name << " " << age << endl;
     }
@@ -111,13 +111,21 @@ public:
         set_attendance(attendance);
         cout << "SConstructor:\t" << this << endl;
     }
+    Student(const Human& human, STUDENT_TAKE_PARAMETERS) : Human(human)
+    {
+        set_speciality(speciality);
+        set_group(group);
+        set_rating(rating);
+        set_attendance(attendance);
+        cout << "SConstructor:\t" << this << endl;
+    }
     ~Student()
     {
         cout << "SDestructor:\t" << this << endl;
     }
 
     //              Methods:
-    void print()const
+    void print()const override
     {
         Human::print();
         cout << speciality << " " << group << " " << rating << " " << attendance << endl;
@@ -161,7 +169,7 @@ public:
     }
 
     //              Methods:
-    void print()const
+    void print()const override
     {
         Human::print();
         cout << speciality << " " << experience << "years" << endl;
@@ -200,23 +208,33 @@ public:
         set_advisor(advisor);
         cout << "GConstructor:\t" << this << endl;
     }
+    Graduate(const Student& student, const std::string& thesis_title) :Student(student)
+    {
+        set_thesis_title(thesis_title);
+        cout << "GConstructor:\t" << this << endl;
+    }
     ~Graduate()
     {
         cout << "GDestructor:\t" << this << endl;
     }
 
     //                  Methods:
-    void print()const
+    void print()const override
     {
         Student::print();
         cout << thesis_title << " " << advisor << endl;
     }
 };
 
+//#define INTHERITANCE_1
+//#define INTHERITANCE_2
+
 void main()
 {
     setlocale(LC_ALL, "");
     cout << "Hello Academy" << endl;
+
+#ifdef INTHERITANCE_1
     Human human("Richter", "Jeffrey", 40);
     human.print();
 
@@ -232,5 +250,40 @@ void main()
     Graduate graduate("Doe", "Johns", 24, "Chemistry", "WW_220", 88.5, 92.3, "Methods of nanocomposite synthesis", "Dr. White");
     graduate.print();
     cout << delimiter << endl;
+#endif // INTHERITANCE_1
 
+#ifdef INTHERITANCE_2
+    Human human("Vercetty", "Tommy", 30);
+    human.print();
+
+    cout << delimiter << endl;
+    Student student(human, "Theft", "Vice", 95, 90);
+    student.print();
+
+    cout << delimiter << endl;
+    Graduate graduate(student, "How to make money");
+    graduate.print();
+    cout << delimiter << endl;
+#endif // INTHERITANCE_2
+
+    Human* group[] =
+    {
+        new Student("Pinkman", "Jessi", 20, "Chemistry", "WW_220", 95, 90),
+        new Teacher("White", "Walter", 50, "Chemistry", 25),
+        new Graduate("Doe", "Johns", 24, "Chemistry", "WW_220", 88.5, 92.3, "Methods of nanocomposite synthesis", "Dr. White"),
+        new Student("Vercetti", "Tommy",30,"Theft", "Vice", 95, 90),
+        new Teacher("Diaz","Ricardo",50,"Weapons distribution",20)
+    };
+
+    cout << delimiter << endl;
+    for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+    {
+        //group[i]->print();
+        cout << delimiter << endl;
+    }
+
+    for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+    {
+        delete group[i];
+    }
 }
