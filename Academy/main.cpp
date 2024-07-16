@@ -1,4 +1,5 @@
 ﻿#include<iostream>
+#include<fstream>
 #include<string>
 using namespace std;
 using std::cin;
@@ -43,8 +44,8 @@ public:
     //              Constructors:
     Human(HUMAN_TAKE_PARAMETERS)
     {
-        set_last_name(last_name); 
-        set_first_name(first_name); 
+        set_last_name(last_name);
+        set_first_name(first_name);
         set_age(age);
         cout << "HConstructor:\t" << this << endl;
     }
@@ -54,9 +55,9 @@ public:
     }
 
     //              Methods:
-    virtual void print()const
+    virtual std::ostream& print(std::ostream& os)const
     {
-        cout << last_name << " " << first_name << " " << age << endl;
+        return os << last_name << " " << first_name << " " << age;
     }
 };
 
@@ -103,7 +104,7 @@ public:
     }
 
     //              Constructors:
-    Student (HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS):Human(HUMAN_GIVE_PARAMETERS)
+    Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)
     {
         set_speciality(speciality);
         set_group(group);
@@ -125,10 +126,9 @@ public:
     }
 
     //              Methods:
-    void print()const override
+    std::ostream& print(std::ostream& os)const override
     {
-        Human::print();
-        cout << speciality << " " << group << " " << rating << " " << attendance << endl;
+        return Human::print(os) << " " << speciality << " " << group << " " << rating << " " << attendance;
     }
 };
 
@@ -155,7 +155,7 @@ public:
     {
         this->experience = experience;
     }
-   
+
     //               Constructors:
     Teacher(HUMAN_TAKE_PARAMETERS, TEACHER_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)
     {
@@ -169,10 +169,9 @@ public:
     }
 
     //              Methods:
-    void print()const override
+    std::ostream& print(std::ostream& os)const override
     {
-        Human::print();
-        cout << speciality << " " << experience << "years" << endl;
+        return Human::print(os) << " " << speciality << " " << experience << "years";
     }
 };
 
@@ -219,25 +218,54 @@ public:
     }
 
     //                  Methods:
-    void print()const override
+    std::ostream& print(std::ostream& os)const override
     {
-        Student::print();
-        cout << thesis_title << " " << advisor << endl;
+        return Student::print(os) << " " << thesis_title << " " << advisor;
     }
 };
-ostream& operator<<(ostream& os, const Human& obj)
+std::ostream& operator<<(std::ostream& os, const Human& obj)
 {
-    obj.print();
-    return os;
+    return obj.print(os);
 }
 
-//#define INTHERITANCE_1
-//#define INTHERITANCE_2
+void Print(Human* group[], const int n)
+{
+    cout << delimiter << endl;
+    for (int i = 0; i < n; i++)
+    {
+        //group[i]->print();
+        cout << *group[i] << endl;
+        cout << delimiter << endl;
+    }
+}
+
+void Clear(Human* group[], const int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        delete group[i];
+    }
+}
+
+void ClearFile(const std::string& filename)
+{
+    std::ofstream fout;
+    fout.open(filename, std::ofstream::out | std::ofstream::trunc);
+    if (fout.is_open())
+    {
+        cout << "File cleared successfully.\n";
+        fout.close();
+    }
+    else
+    {
+        std::cerr << "Error: File not found" << endl;
+    }
+}
 
 void main()
 {
     setlocale(LC_ALL, "");
-    cout << "Hello Academy" << endl;
+    //cout << "Hello Academy" << endl;
 
 #ifdef INTHERITANCE_1
     Human human("Richter", "Jeffrey", 40);
@@ -280,16 +308,43 @@ void main()
         new Teacher("Diaz","Ricardo",50,"Weapons distribution",20)
     };
 
-    cout << delimiter << endl;
-    for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+    char clearFile;
+    cout << "Do you want to clear the file? (y/n): ";
+    cin >> clearFile;
+    if (clearFile == 'y' || clearFile == 'Y')
     {
-        //group[i]->print();
-        cout << *group[i] << endl;
-        cout << delimiter << endl;
+        ClearFile("File.txt");
     }
 
+    std::ofstream fout;
+    fout.open("File.txt", std::ios_base::app);
     for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
     {
-        delete group[i];
+        fout << *group[i] << endl;
     }
+    fout.close();
+
+    Print(group, sizeof(group) / sizeof(group[0]));
+    Clear(group, sizeof(group) / sizeof(group[0]));
+
+    cout << delimiter << endl;
+
+    std::ifstream fin("File.txt");
+    if (fin.is_open())
+    {
+        while (!fin.eof())
+        {
+            const int SIZE = 1024;
+            char buffer[SIZE]{};
+            fin.getline(buffer, SIZE);
+            cout << buffer << endl;
+        }
+        fin.close();
+    }
+    else
+    {
+        std::cerr << "Error: File not found" << endl;
+    }
+    system("notepad File.txt");
 }
+
