@@ -262,6 +262,9 @@ void ClearFile(const std::string& filename)
     }
 }
 
+//#define INTHERITANCE_1
+//#define INTHERITANCE_2
+
 void main()
 {
     setlocale(LC_ALL, "");
