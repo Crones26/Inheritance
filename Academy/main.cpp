@@ -5,9 +5,45 @@
 #include "Graduate.h"
 #include "Utilities.h"
 
+//#define INTHERITANCE_1
+//#define INTHERITANCE_2
+
 void main()
 {
     setlocale(LC_ALL, "");
+    //cout << "Hello Academy" << endl;
+
+#ifdef INTHERITANCE_1
+    Human human("Richter", "Jeffrey", 40);
+    human.print();
+
+    cout << delimiter << endl;
+    Student student("Pinkman", "Jessi", 20, "Chemistry", "WW_220", 95, 90);
+    student.print();
+
+    cout << delimiter << endl;
+    Teacher teacher("White", "Walter", 50, "Chemistry", 25);
+    teacher.print();
+
+    cout << delimiter << endl;
+    Graduate graduate("Doe", "Johns", 24, "Chemistry", "WW_220", 88.5, 92.3, "Methods of nanocomposite synthesis", "Dr. White");
+    graduate.print();
+    cout << delimiter << endl;
+#endif // INTHERITANCE_1
+
+#ifdef INTHERITANCE_2
+    Human human("Vercetty", "Tommy", 30);
+    human.print();
+
+    cout << delimiter << endl;
+    Student student(human, "Theft", "Vice", 95, 90);
+    student.print();
+
+    cout << delimiter << endl;
+    Graduate graduate(student, "How to make money");
+    graduate.print();
+    cout << delimiter << endl;
+#endif // INTHERITANCE_2
 
     Human* group[] =
     {
@@ -50,9 +86,6 @@ void main()
         }
         fin.close();
     }
-    else
-    {
-        std::cerr << "Error: File not found" << std::endl;
-    }
+   
     system("notepad File.txt");
 }
