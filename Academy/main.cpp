@@ -316,11 +316,11 @@ void main()
     cin >> clearFile;
     if (clearFile == 'y' || clearFile == 'Y')
     {
-        ClearFile("File.txt");
+        ClearFile("Group.txt");
     }
 
     std::ofstream fout;
-    fout.open("File.txt", std::ios_base::app);
+    fout.open("Group.txt", std::ios_base::app);
     for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
     {
         fout << *group[i] << endl;
@@ -332,7 +332,7 @@ void main()
 
     cout << delimiter << endl;
 
-    std::ifstream fin("File.txt");
+    std::ifstream fin("Group.txt");
     if (fin.is_open())
     {
         while (!fin.eof())
@@ -344,10 +344,7 @@ void main()
         }
         fin.close();
     }
-    else
-    {
-        std::cerr << "Error: File not found" << endl;
-    }
-    system("notepad File.txt");
+    system("notepad Group.txt");
+
 }
 

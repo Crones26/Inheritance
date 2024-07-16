@@ -1,5 +1,0 @@
-Pinkman  Jessie 20 Chemistry WW_220 95 90
-White  Walter 50 Chemistry 25
-Ilyukhin  Ivan 32 Software Engineering BV_319 100 100 Best app in the world
-Vercetti  Tommy 30 Theft Vice 95 98
-Diaz  Ricardo 50 Weapons distribution 20
