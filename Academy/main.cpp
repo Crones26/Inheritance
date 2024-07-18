@@ -142,7 +142,8 @@ public:
         this->attendance = attendance;
     }
     //              Constructors:
-    Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS) : Human(HUMAN_GIVE_PARAMETERS) {
+    Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS) : Human(HUMAN_GIVE_PARAMETERS)
+    {
         set_speciality(speciality);
         set_group(group);
         set_rating(rating);
@@ -207,7 +208,8 @@ public:
         this->experience = experience;
     }
     //              Constructors:
-    Teacher(HUMAN_TAKE_PARAMETERS, TEACHER_TAKE_PARAMETERS) : Human(HUMAN_GIVE_PARAMETERS) {
+    Teacher(HUMAN_TAKE_PARAMETERS, TEACHER_TAKE_PARAMETERS) : Human(HUMAN_GIVE_PARAMETERS)
+    {
         set_speciality(speciality);
         set_experience(experience);
         cout << "TConstructor:\t" << this << endl;
@@ -388,7 +390,8 @@ void ClearFile(const std::string& filename)
         cout << "File cleared successfully.\n";
         fout.close();
     }
-    else {
+    else 
+    {
         std::cerr << "Error: File not found" << endl;
     }
 }
