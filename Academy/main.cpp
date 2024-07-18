@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
+#include <string.h>
 using namespace std;
 using std::cin;
 using std::cout;
@@ -399,7 +400,6 @@ void ClearFile(const std::string& filename)
 //#define INTHERITANCE_1
 //#define SAVE_CHECK
 #define LOAD_CHECK
-
 
 void main()
 {
