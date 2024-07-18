@@ -1,0 +1,5 @@
+Student:    Pinkman        Jessi          20   Chemistry                WW_220  95      90      
+Teacher:    White          Walter         50   Chemistry                25   
+Graduate:   Doe            Johns          24   Chemistry                WW_220  88.5    92.3    
+Student:    Vercetti       Tommy          30   Theft                    Vice    95      90      
+Teacher:    Diaz           Ricardo        50   Weapons distribution     20   

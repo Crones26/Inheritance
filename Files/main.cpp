@@ -20,7 +20,7 @@ void main()
 	std::ofstream fout;							// 1.Создаем поток.
 	fout.open("File.txt", std::ios_base::app);	// 2.Открываем поток. При открытии потока 
 	// мы указываем в какой именно файл мы будем писать
-//std::ios_base::app(append) - дописывать в конец файла	
+	//std::ios_base::app(append) - дописывать в конец файла	
 	fout << "Hello Files" << endl;				// 3.Пишем поток. 
 	fout << "Привет" << endl;
 	fout.close();								// 4.Закрываем поток. Обязательно нужно закрывать
