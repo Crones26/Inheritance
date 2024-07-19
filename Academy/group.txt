@@ -1,5 +1,5 @@
-Student:    Pinkman        Jessi          20   Chemistry                WW_220  95      90      
+Student:    Pinkman        Jessie         20   Chenistry                WW_220  95      90      
 Teacher:    White          Walter         50   Chemistry                25   
-Graduate:   Doe            Johns          24   Chemistry                WW_220  88.5    92.3    
-Student:    Vercetti       Tommy          30   Theft                    Vice    95      90      
+Graduate:   Schrader       Hank           40   Criminalistic            OBN     70      75      How to catch Heisenberg
+Student:    Vercetti       Tommy          30   Theft                    Vice    97      98      
 Teacher:    Diaz           Ricardo        50   Weapons distribution     20   
