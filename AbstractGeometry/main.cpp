@@ -328,4 +328,5 @@ void main()
 
     Geometry::Triangle triangle(100, 100, 100, Geometry::Color::CONSOLE_YELLOW);
     triangle.info(700, 100);
+
 }

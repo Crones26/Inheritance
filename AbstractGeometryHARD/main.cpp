@@ -313,7 +313,7 @@ namespace Geometry
 void DrawShapesToBitmap(const wchar_t* filename)
 {
     // Размер изображения
-    int width = 1080;
+    int width = 1000;
     int height = 900;
 
     // Создание устройства памяти и совместимого контекста устройства
@@ -328,7 +328,7 @@ void DrawShapesToBitmap(const wchar_t* filename)
     FillRect(memDC, &rect, hBrush);
     DeleteObject(hBrush);
 
-    // Рисование фигур
+    // Рисуем фигуры
     Geometry::Square square(100, Geometry::Color::CONSOLE_YELLOW);
     Geometry::Rectangle rectShape(150, 80, Geometry::Color::CONSOLE_BLUE);
     Geometry::Circle circle(50, Geometry::Color::CONSOLE_GREEN);
