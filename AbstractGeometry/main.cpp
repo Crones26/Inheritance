@@ -7,12 +7,13 @@ namespace Geometry
 	
 	//enum (Enumeration - Перечисление) - это набор именованных констрант типа 'int'
 	enum Color
-	{
+	{	//Здесь используются 8-битные значения, которые могут интерпретироваться по-разному(что не есть хорошо)
 		//CONSOLE_RED = 0xCC,	//старшая 'C' - цвет фона, младшая 'C' - цвет текста.
 		//CONSOLE_GREEN = 0xAA,
 		//CONSOLE_BLUE = 0x99,
 		//CONSOLE_DEFAULT = 0x07
 
+		// Здесь используются 32-битные значения(0xAARRGGBB)
 		CONSOLE_RED = 0x000000FF,
 		CONSOLE_GREEN = 0x0000FF00,
 		CONSOLE_BLUE = 0x00FF0000,
