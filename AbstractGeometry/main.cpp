@@ -64,7 +64,7 @@ namespace Geometry
 		{
 			return side * 4;
 		}
-		void draw()const override // метод для рисования окружности с использованием GDI-функций Windows:
+		void draw()const override 
 		{
 			//HWND hwnd = GetConsoleWindow();
 			HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio"); //находит окно с заголовком "Inheritance - Microsoft Visual Studio".
@@ -234,7 +234,7 @@ namespace Geometry
 		{
 			return 2 * 3.14 * radius;
 		}
-		void draw()const override // метод для рисования окружности с использованием GDI-функций Windows:
+		void draw()const override 
 		{
 			//HWND hwnd = GetConsoleWindow();
 			HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio"); //находит окно с заголовком "Inheritance - Microsoft Visual Studio".
