@@ -5,8 +5,15 @@ using namespace std;
 
 namespace Geometry
 {
+    //enum (Enumeration - Перечисление) - это набор именованных констрант типа 'int'
     enum Color
-    {
+    {	//Здесь используются 8-битные значения, которые могут интерпретироваться по-разному(что не есть хорошо)
+        //CONSOLE_RED = 0xCC,	//старшая 'C' - цвет фона, младшая 'C' - цвет текста.
+        //CONSOLE_GREEN = 0xAA,
+        //CONSOLE_BLUE = 0x99,
+        //CONSOLE_DEFAULT = 0x07
+
+        // Здесь используются 32-битные значения(0xAARRGGBB)
         CONSOLE_RED = 0x000000FF,
         CONSOLE_GREEN = 0x0000FF00,
         CONSOLE_BLUE = 0x00FF0000,
@@ -42,6 +49,54 @@ namespace Geometry
         }
     };
 
+    /*class Square :public Shape
+    {
+        double side;
+    public:
+        Square(double side, Color color) :Shape(color)
+        {
+            set_side(side);
+        }
+        ~Square() {}
+        void set_side(double side)
+        {
+            this->side = side;
+        }
+        double get_side()const
+        {
+            return side;
+        }
+        double get_area()const override
+        {
+            return side * side;
+        }
+        double get_perimeter()const override
+        {
+            return side * 4;
+        }
+        void draw()const override
+        {
+            HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleTextAttribute(hConsole, color);
+            for (int i = 0; i < side; i++)
+            {
+                for (int i = 0; i < side; i++)
+                {
+                    cout << "* ";
+                }
+                cout << endl;
+            }
+            SetConsoleTextAttribute(hConsole, Color::CONSOLE_DEFAULT);
+        }
+
+        void info()const override
+        {
+            cout << typeid(*this).name() << endl;
+            cout << "Длина стороны: " << get_side() << endl;
+            Shape::info();
+        }
+    };*/
+
     class Square :public Shape
     {
         double side;
@@ -69,6 +124,7 @@ namespace Geometry
         }
         void draw(HDC hdc, int offsetX, int offsetY)const override
         {
+            HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio"); //находит окно с заголовком "Inheritance - Microsoft Visual Studio".
             HPEN hPen = CreatePen(PS_SOLID, 5, setRGB(color));// создает сплошное перо заданного цвета и толщины 5 пикселей
             HBRUSH hBrush = CreateSolidBrush(setRGB(color));// создает кисть заданного цвета.
             // выбирает созданные перо и кисть в контекст устройства.
@@ -125,6 +181,7 @@ namespace Geometry
         }
         void draw(HDC hdc, int offsetX, int offsetY)const override
         {
+            HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio"); //находит окно с заголовком "Inheritance - Microsoft Visual Studio".
             HPEN hPen = CreatePen(PS_SOLID, 5, setRGB(color));// создает сплошное перо заданного цвета и толщины 5 пикселей
             HBRUSH hBrush = CreateSolidBrush(setRGB(color));// создает кисть заданного цвета.
             // выбирает созданные перо и кисть в контекст устройства.
@@ -172,6 +229,7 @@ namespace Geometry
         }
         void draw(HDC hdc, int offsetX, int offsetY)const override
         {
+            HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio"); //находит окно с заголовком "Inheritance - Microsoft Visual Studio".
             HPEN hPen = CreatePen(PS_SOLID, 5, setRGB(color));// создает сплошное перо заданного цвета и толщины 5 пикселей
             HBRUSH hBrush = CreateSolidBrush(setRGB(color));// создает кисть заданного цвета.
             // выбирает созданные перо и кисть в контекст устройства.
@@ -229,6 +287,7 @@ namespace Geometry
         }
         void draw(HDC hdc, int offsetX, int offsetY)const override
         {
+            HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio"); //находит окно с заголовком "Inheritance - Microsoft Visual Studio".
             HPEN hPen = CreatePen(PS_SOLID, 5, setRGB(color));// создает сплошное перо заданного цвета и толщины 5 пикселей
             HBRUSH hBrush = CreateSolidBrush(setRGB(color));// создает кисть заданного цвета.
             // выбирает созданные перо и кисть в контекст устройства.

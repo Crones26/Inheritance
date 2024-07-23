@@ -317,7 +317,7 @@ namespace Geometry
 void main()
 {
     setlocale(LC_ALL, "");
-    Geometry::Square square(100, Geometry::Color::CONSOLE_YELLOW);
+    Geometry::Square square(100, Geometry::Color::CONSOLE_RED);
     square.info(100, 100);
 
     Geometry::Rectangle rect(150, 80, Geometry::Color::CONSOLE_BLUE);
@@ -326,6 +326,6 @@ void main()
     Geometry::Circle circle(50, Geometry::Color::CONSOLE_GREEN);
     circle.info(500, 100);
 
-    Geometry::Triangle triangle(100, 100, 100, Geometry::Color::CONSOLE_RED);
+    Geometry::Triangle triangle(100, 100, 100, Geometry::Color::CONSOLE_YELLOW);
     triangle.info(700, 100);
 }
