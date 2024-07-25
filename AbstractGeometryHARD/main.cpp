@@ -432,7 +432,31 @@ void DrawShapesToBitmap(const wchar_t* filename)
     memset(&biHeader, 0, sizeof(BITMAPINFOHEADER));
     memset(&bInfo, 0, sizeof(BITMAPINFO));
 
-    
+    bfHeader.bfType = 0x4D42;
+    bfHeader.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+    bfHeader.bfSize = bfHeader.bfOffBits + width * height * 4;
+
+    biHeader.biSize = sizeof(BITMAPINFOHEADER);
+    biHeader.biWidth = width;
+    biHeader.biHeight = -height;
+    biHeader.biPlanes = 1;
+    biHeader.biBitCount = 32;
+    biHeader.biCompression = BI_RGB;
+    biHeader.biSizeImage = width * height * 4;
+
+    bInfo.bmiHeader = biHeader;
+
+    DWORD dwBmpSize = width * height * 4;
+    HANDLE hDIB = GlobalAlloc(GHND, dwBmpSize);
+    char* lpbitmap = (char*)GlobalLock(hDIB);
+
+    GetDIBits(memDC, hBitmap, 0, (UINT)height, lpbitmap, &bInfo, DIB_RGB_COLORS);
+
+    std::ofstream file(filename, std::ios::out | std::ios::binary);
+    file.write((char*)&bfHeader, sizeof(BITMAPFILEHEADER));
+    file.write((char*)&biHeader, sizeof(BITMAPINFOHEADER));
+    file.write(lpbitmap, dwBmpSize);
+    file.close();
 
     GlobalUnlock(hDIB);
     GlobalFree(hDIB);
