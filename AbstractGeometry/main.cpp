@@ -364,6 +364,7 @@ namespace Geometry
         {
             set_side(side);
         }
+        ~EquilateralTriangle() {}
         void set_side(double side)
         {
             this->side = filter_size(side);
@@ -400,7 +401,7 @@ namespace Geometry
                 {start_x + side, start_y + side},
                 {start_x + side / 2, start_y + side - get_height()}
             };
-            Polygon(hdc, points, 3);
+            ::Polygon(hdc, points, 3);
 
             DeleteObject(hBrush);
             DeleteObject(hPen);
@@ -424,6 +425,7 @@ namespace Geometry
             set_base(base);
             set_height(height);
         }
+        ~IsoscelesTriangle() {}
         void set_base(double base)
         {
             this->base = filter_size(base);
@@ -464,7 +466,7 @@ namespace Geometry
                 {start_x + base, start_y + height},
                 {start_x, start_y}
             };
-            Polygon(hdc, points, 3);
+            ::Polygon(hdc, points, 3);
 
             DeleteObject(hBrush);
             DeleteObject(hPen);
@@ -489,6 +491,7 @@ namespace Geometry
             set_base(base);
             set_height(height);
         }
+        ~RightTriangle() {}
         void set_base(double base)
         {
             this->base = filter_size(base);
@@ -529,7 +532,7 @@ namespace Geometry
                 {start_x + base, start_y + height},
                 {start_x, start_y}
             };
-            Polygon(hdc, points, 3);
+            ::Polygon(hdc, points, 3);
 
             DeleteObject(hBrush);
             DeleteObject(hPen);
