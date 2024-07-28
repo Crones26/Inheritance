@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include <iostream>
 #include <fstream>
-#include <cmath>
 using namespace std;
 
 namespace Geometry
