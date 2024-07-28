@@ -6,12 +6,9 @@ using namespace std;
 
 namespace Geometry
 {
-    //enum (Enumeration - Перечисление) - это набор именованных констант типа 'int'
     enum Color
     {
-        //Здесь используются 8-битные значения, которые могут интерпретироваться по-разному (что не есть хорошо)
-        CONSOLE_RED = 0xCC, // старшая 'C' - цвет фона, младшая 'C' - цвет текста.
-        CONSOLE_GREEN = 0xAA,
+        CONSOLE_RED = 0xCC, 
         CONSOLE_BLUE = 0x99,
         CONSOLE_DEFAULT = 0x07,
         RED = 0x000000FF,
@@ -31,7 +28,6 @@ namespace Geometry
         unsigned int line_width;
         Color color;
 
-        // Определяем ограничения
         static const int MIN_START_X = 100;
         static const int MAX_START_X = 1000;
         static const int MIN_START_Y = 100;
@@ -63,7 +59,6 @@ namespace Geometry
         virtual void draw_shape(HDC hdc) const = 0;
 
     public:
-        // Чисто-виртуальные функции (Pure virtual function)
         virtual double get_area() const = 0;
         virtual double get_perimeter() const = 0;
         virtual void draw(HDC hdc) const
@@ -405,16 +400,22 @@ void DrawShapesToBitmap(const wchar_t* filename)
     int width = 1280;
     int height = 960;
 
+    // Получаем контекст устройства для всего экрана
     HDC hdc = GetDC(NULL);
+    // Создаем совместимый контекст устройства в памяти
     HDC memDC = CreateCompatibleDC(hdc);
+    // Создаем совместимое с контекстом устройства изображение
     HBITMAP hBitmap = CreateCompatibleBitmap(hdc, width, height);
+    // Выбираем изображение в контекст устройства
     SelectObject(memDC, hBitmap);
 
+    // Заполняем фон белым цветом
     HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
     RECT rect = { 0, 0, width, height };
     FillRect(memDC, &rect, hBrush);
     DeleteObject(hBrush);
 
+    // Создаем объекты фигур
     Geometry::Square square(100, 100, 100, 5, Geometry::Color::RED);
     Geometry::Rectangle rectShape(150, 80, 300, 100, 5, Geometry::Color::BLUE);
     Geometry::Circle circle(50, 500, 100, 5, Geometry::Color::GREEN);
@@ -422,6 +423,7 @@ void DrawShapesToBitmap(const wchar_t* filename)
     Geometry::IsoscelesTriangle isoscelesTriangle(100, 150, 100, 250, 5, Geometry::Color::RED);
     Geometry::RightTriangle rightTriangle(100, 150, 300, 250, 5, Geometry::Color::BLUE);
 
+    // Рисуем фигуры на изображении
     square.draw(memDC);
     rectShape.draw(memDC);
     circle.draw(memDC);
@@ -429,6 +431,7 @@ void DrawShapesToBitmap(const wchar_t* filename)
     isoscelesTriangle.draw(memDC);
     rightTriangle.draw(memDC);
 
+    // Инициализируем структуры для заголовка BMP файла
     BITMAPFILEHEADER bfHeader;
     BITMAPINFOHEADER biHeader;
     BITMAPINFO bInfo;
@@ -436,13 +439,15 @@ void DrawShapesToBitmap(const wchar_t* filename)
     memset(&biHeader, 0, sizeof(BITMAPINFOHEADER));
     memset(&bInfo, 0, sizeof(BITMAPINFO));
 
-    bfHeader.bfType = 0x4D42;
+    // Заполняем заголовок BMP файла
+    bfHeader.bfType = 0x4D42; // "BM"
     bfHeader.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
     bfHeader.bfSize = bfHeader.bfOffBits + width * height * 4;
 
+    // Заполняем заголовок BMP информации
     biHeader.biSize = sizeof(BITMAPINFOHEADER);
     biHeader.biWidth = width;
-    biHeader.biHeight = -height;
+    biHeader.biHeight = -height; // Отражаем изображение по вертикали
     biHeader.biPlanes = 1;
     biHeader.biBitCount = 32;
     biHeader.biCompression = BI_RGB;
@@ -450,18 +455,22 @@ void DrawShapesToBitmap(const wchar_t* filename)
 
     bInfo.bmiHeader = biHeader;
 
+    // Создаем буфер для хранения пикселей изображения
     DWORD dwBmpSize = width * height * 4;
     HANDLE hDIB = GlobalAlloc(GHND, dwBmpSize);
     char* lpbitmap = (char*)GlobalLock(hDIB);
 
+    // Получаем пиксели изображения из контекста устройства
     GetDIBits(memDC, hBitmap, 0, (UINT)height, lpbitmap, &bInfo, DIB_RGB_COLORS);
 
+    // Записываем данные в файл
     std::ofstream file(filename, std::ios::out | std::ios::binary);
     file.write((char*)&bfHeader, sizeof(BITMAPFILEHEADER));
     file.write((char*)&biHeader, sizeof(BITMAPINFOHEADER));
     file.write(lpbitmap, dwBmpSize);
     file.close();
 
+    // Освобождаем ресурсы
     GlobalUnlock(hDIB);
     GlobalFree(hDIB);
 
@@ -476,8 +485,9 @@ void main()
 
     const wchar_t* filename = L"shapes.bmp";
 
+    // Рисуем фигуры и сохраняем их в BMP файл
     DrawShapesToBitmap(filename);
 
+    // Открываем созданный BMP файл в MS Paint
     ShellExecute(NULL, L"open", L"mspaint.exe", filename, NULL, SW_SHOW);
-
 }
