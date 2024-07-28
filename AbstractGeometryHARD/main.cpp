@@ -471,7 +471,7 @@ void DrawShapesToBitmap(const wchar_t* filename)
     ReleaseDC(NULL, hdc);
 }
 
-int main()
+void main()
 {
     setlocale(LC_ALL, "");
 
@@ -481,5 +481,4 @@ int main()
 
     ShellExecute(NULL, L"open", L"mspaint.exe", filename, NULL, SW_SHOW);
 
-    return 0;
 }
