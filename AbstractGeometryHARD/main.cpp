@@ -6,11 +6,9 @@ using namespace std;
 
 namespace Geometry
 {
-    //enum (Enumeration - Перечисление) - это набор именованных констант типа 'int'
     enum Color
     {
-        //Здесь используются 8-битные значения, которые могут интерпретироваться по-разному (что не есть хорошо)
-        CONSOLE_RED = 0xCC, // старшая 'C' - цвет фона, младшая 'C' - цвет текста.
+        CONSOLE_RED = 0xCC,
         CONSOLE_GREEN = 0xAA,
         CONSOLE_BLUE = 0x99,
         CONSOLE_DEFAULT = 0x07,
@@ -31,7 +29,6 @@ namespace Geometry
         unsigned int line_width;
         Color color;
 
-        // Определяем ограничения
         static const int MIN_START_X = 100;
         static const int MAX_START_X = 1000;
         static const int MIN_START_Y = 100;
@@ -42,31 +39,10 @@ namespace Geometry
         static const int MAX_SIZE = 550;
         static int count;
 
-        void initialize_draw(HDC hdc) const
-        {
-            // Создаем перо и кисть
-            HPEN hPen = CreatePen(PS_SOLID, line_width, color); // hPen - рисует контур фигуры;
-            HBRUSH hBrush = CreateSolidBrush(color); // hBrush - рисует заливку фигуры (SolidBrush - сплошной цвет)
-            // Выбираем чем и на чем будем рисовать
-            SelectObject(hdc, hPen);
-            SelectObject(hdc, hBrush);
-            // Специфичная логика рисования для каждой фигуры
-            draw_shape(hdc);
-
-            // Освобождаем ресурсы
-            DeleteObject(hBrush);
-            DeleteObject(hPen);
-        }
-        virtual void draw_shape(HDC hdc) const = 0;
-
     public:
-        // Чисто-виртуальные функции (Pure virtual function)
         virtual double get_area() const = 0;
         virtual double get_perimeter() const = 0;
-        virtual void draw(HDC hdc) const
-        {
-            initialize_draw(hdc);
-        }
+        virtual void draw(HDC hdc) const = 0;
 
         Shape(SHAPE_TAKE_PARAMETERS) : start_x(start_x), start_y(start_y), line_width(line_width), color(color)
         {
@@ -83,7 +59,7 @@ namespace Geometry
         {
             return count;
         }
-        //          Encapsulation
+
         unsigned int get_start_x() const
         {
             return start_x;
@@ -121,7 +97,7 @@ namespace Geometry
                 size > MAX_SIZE ? MAX_SIZE :
                 size;
         }
-        //              Methods
+
         virtual void info() const
         {
             cout << "Площадь фигуры: " << get_area() << endl;
@@ -133,8 +109,8 @@ namespace Geometry
 
     class Rectangle : public Shape
     {
-        double width; // ширина прямоугольника
-        double height; // высота прямоугольника
+        double width;
+        double height;
     public:
         Rectangle(double width, double height, SHAPE_TAKE_PARAMETERS) : Shape(SHAPE_GIVE_PARAMETERS)
         {
@@ -166,9 +142,18 @@ namespace Geometry
         {
             return (width + height) * 2;
         }
-        void draw_shape(HDC hdc) const override
+        void draw(HDC hdc) const override
         {
+            HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+            HBRUSH hBrush = CreateSolidBrush(color);
+
+            SelectObject(hdc, hPen);
+            SelectObject(hdc, hBrush);
+
             ::Rectangle(hdc, start_x, start_y, start_x + width, start_y + height);
+
+            DeleteObject(hBrush);
+            DeleteObject(hPen);
         }
         void info() const override
         {
@@ -215,9 +200,18 @@ namespace Geometry
         {
             return 2 * M_PI * radius;
         }
-        void draw_shape(HDC hdc) const override
+        void draw(HDC hdc) const override
         {
+            HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+            HBRUSH hBrush = CreateSolidBrush(color);
+
+            SelectObject(hdc, hPen);
+            SelectObject(hdc, hBrush);
+
             ::Ellipse(hdc, start_x, start_y, start_x + get_diameter(), start_y + get_diameter());
+
+            DeleteObject(hBrush);
+            DeleteObject(hPen);
         }
         void info() const override
         {
@@ -249,7 +243,6 @@ namespace Geometry
         {
             set_side(side);
         }
-        ~EquilateralTriangle() {}
         void set_side(double side)
         {
             this->side = filter_size(side);
@@ -270,15 +263,24 @@ namespace Geometry
         {
             return 3 * side;
         }
-        void draw_shape(HDC hdc) const override
+        void draw(HDC hdc) const override
         {
+            HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+            HBRUSH hBrush = CreateSolidBrush(color);
+
+            SelectObject(hdc, hPen);
+            SelectObject(hdc, hBrush);
+
             POINT points[] =
             {
                 {start_x, start_y + side},
                 {start_x + side, start_y + side},
                 {start_x + side / 2, start_y + side - get_height()}
             };
-            ::Polygon(hdc, points, 3);
+            Polygon(hdc, points, 3);
+
+            DeleteObject(hBrush);
+            DeleteObject(hPen);
         }
         void info() const override
         {
@@ -298,7 +300,6 @@ namespace Geometry
             set_base(base);
             set_height(height);
         }
-        ~IsoscelesTriangle() {}
         void set_base(double base)
         {
             this->base = filter_size(base);
@@ -323,15 +324,24 @@ namespace Geometry
         {
             return base + 2 * sqrt((base / 2) * (base / 2) + height * height);
         }
-        void draw_shape(HDC hdc) const override
+        void draw(HDC hdc) const override
         {
+            HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+            HBRUSH hBrush = CreateSolidBrush(color);
+
+            SelectObject(hdc, hPen);
+            SelectObject(hdc, hBrush);
+
             POINT points[] =
             {
                 {start_x, start_y + height},
                 {start_x + base, start_y + height},
                 {start_x + base / 2, start_y}
             };
-            ::Polygon(hdc, points, 3);
+            Polygon(hdc, points, 3);
+
+            DeleteObject(hBrush);
+            DeleteObject(hPen);
         }
         void info() const override
         {
@@ -352,7 +362,6 @@ namespace Geometry
             set_base(base);
             set_height(height);
         }
-        ~RightTriangle() {}
         void set_base(double base)
         {
             this->base = filter_size(base);
@@ -377,15 +386,24 @@ namespace Geometry
         {
             return base + height + sqrt(base * base + height * height);
         }
-        void draw_shape(HDC hdc) const override
+        void draw(HDC hdc) const override
         {
+            HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+            HBRUSH hBrush = CreateSolidBrush(color);
+
+            SelectObject(hdc, hPen);
+            SelectObject(hdc, hBrush);
+
             POINT points[] =
             {
                 {start_x, start_y + height},
                 {start_x + base, start_y + height},
                 {start_x, start_y}
             };
-            ::Polygon(hdc, points, 3);
+            Polygon(hdc, points, 3);
+
+            DeleteObject(hBrush);
+            DeleteObject(hPen);
         }
         void info() const override
         {
