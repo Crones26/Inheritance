@@ -46,15 +46,12 @@ namespace Geometry
             // Получаем окно консоли
             HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio");
             HDC hdc = GetDC(hwnd);  // Получаем контекст окна консоли
-
             // Создаем перо и кисть
             HPEN hPen = CreatePen(PS_SOLID, line_width, color); // hPen - рисует контур фигуры;
             HBRUSH hBrush = CreateSolidBrush(color); // hBrush - рисует заливку фигуры (SolidBrush - сплошной цвет)
-
             // Выбираем чем и на чем будем рисовать
             SelectObject(hdc, hPen);
             SelectObject(hdc, hBrush);
-
             // Специфичная логика рисования для каждой фигуры
             draw_shape(hdc);
 
