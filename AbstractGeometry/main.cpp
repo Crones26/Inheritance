@@ -427,6 +427,8 @@ namespace Geometry
         void set_base(double base)
         {
             this->base = filter_size(base);
+            if (this->height <= base / 2)
+                this->height = base * 3 / 5;
         }
         void set_height(double height)
         {
@@ -492,6 +494,8 @@ namespace Geometry
         void set_base(double base)
         {
             this->base = filter_size(base);
+            if (this->height <= base / 2)
+                this->height = base * 3 / 5;
         }
         void set_height(double height)
         {
