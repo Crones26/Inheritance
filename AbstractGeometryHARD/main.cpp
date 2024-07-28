@@ -81,7 +81,7 @@ namespace Geometry
         {
             return count;
         }
-        //          Encapsulation
+        
         unsigned int get_start_x() const
         {
             return start_x;
@@ -119,7 +119,7 @@ namespace Geometry
                 size > MAX_SIZE ? MAX_SIZE :
                 size;
         }
-        //              Methods
+       
         virtual void info() const
         {
             cout << "Площадь фигуры: " << get_area() << endl;
@@ -131,8 +131,8 @@ namespace Geometry
 
     class Rectangle : public Shape
     {
-        double width; // ширина прямоугольника
-        double height; // высота прямоугольника
+        double width;
+        double height;
     public:
         Rectangle(double width, double height, SHAPE_TAKE_PARAMETERS) : Shape(SHAPE_GIVE_PARAMETERS)
         {
