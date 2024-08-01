@@ -2,6 +2,9 @@
 #include <Windows.h>
 #include <iostream>
 using namespace std;
+using std::cout;
+using std::cin;
+using std::endl;
 
 namespace Geometry
 {
@@ -64,7 +67,7 @@ namespace Geometry
         virtual void draw_shape(HDC hdc) const = 0;
 
     public:
-        // Чисто-виртуальные функции (Pure virtual function)
+        // Чисто-виртуальные функции
         virtual double get_area() const = 0;
         virtual double get_perimeter() const = 0;
         virtual void draw() const

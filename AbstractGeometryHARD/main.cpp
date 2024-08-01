@@ -428,7 +428,7 @@ void DrawShapesToBitmap(const wchar_t* filename)
     equilateralTriangle.draw(memDC);
     isoscelesTriangle.draw(memDC);
     rightTriangle.draw(memDC);
-
+    
     // Инициализируем структуры для заголовка BMP файла
     BITMAPFILEHEADER bfHeader;
     BITMAPINFOHEADER biHeader;
